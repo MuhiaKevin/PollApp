@@ -11,6 +11,7 @@ const Schema = mongoose.Schema;
 const poll_schema = new Schema({
     poll_id: String,
     question: { type: String, required: true },
+    total_votes : Number,
     options: [{
         description: String,
         votes: Number
@@ -61,7 +62,10 @@ function upVotePoll(pollid, optionindex, done) {
 
         ans = poll.options[optionindex].votes + 1
         poll.options[optionindex].votes = ans
-
+        
+        totalvotes = poll.total_votes + 1
+        poll.total_votes = totalvotes
+        
         poll.save((err, updatedPoll) => {
             if (err) return console.log(err);
             done(null, updatedPoll)

@@ -12,9 +12,10 @@ router.get('/', (req, res) => {
 // add poll
 router.post('/add', (req, res) => {
     let { question, options } = req.body
-
+    
     let poll = {
         poll_id: shortid.generate(),
+        total_votes : 0,    
         question: question,
         options: options
     }
@@ -44,7 +45,7 @@ router.get('/stats/:pollid', (req, res) => {
 
 })
 
-router.get('/stats', (req, res) => {
+router.get('/polls', (req, res) => {
     getAllPolls((error, data) => {
         if (error) {
             res.status(404).json({ error: error })
