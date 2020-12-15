@@ -1,67 +1,63 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
+import { Link } from "react-router-dom"
 
-class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      polls: []
-    }
-    this.getPolls = this.getPolls.bind(this)
-  }
+function App() {
+  const [polls, setPolls] = useState([])
 
-  async getPolls() {
+  const getPolls = async () => {
     const url = "http://localhost:5000/api/v1/poll/polls"
     const response = await (await (await fetch(url)).json())
-    console.log(response)
-    this.setState({
-      polls: response
-    })
 
-  }
-  componentDidMount() {
-    this.getPolls()
+    setPolls(response)
   }
 
-  render() {
-    return (
-      <div >
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-          <div className="container">
-            <a className="navbar-brand" href="#">Poll App</a>
+  useEffect(() => {
+    getPolls()
+  }, [])
 
-          </div>
-        </nav>
+  return (
+    <div >
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div className="container">
-          <div className="wrap">
-            <div className="main">
-              <div className="col-lg-12 text-center">
-                <div className="App">
-                  <h1>Latest Polls</h1>
+          <a className="navbar-brand" href="http://localhost:3000/">Poll App</a>
 
-                  <ul className="list-group" >
-                    {this.state.polls.map((value, index) => {
-                      return (
-                        <li key={index} className="list-group-item list-group-item" >
-                          <a href="#">
-                            <p>{value.question}</p>
-                          </a>
-                          <p><strong> {value.total_votes} Votes</strong></p>
-                        </li>
-                      )
-                    })}
-                  </ul>
+        </div>
+      </nav>
+      <div className="container">
+        <div className="wrap">
+          <div className="main">
+            <div className="col-lg-12 text-center">
+              <div className="App">
+                <h1>Latest Polls</h1>
+
+                <ul className="list-group" >
+                  {polls.map(vote_item => {
+
+                    return (
+                      <li key={vote_item._id} className="list-group-item list-group-item" >
+                        <p>{vote_item.question}</p>
+                        <p><strong> {vote_item.total_votes} Votes</strong></p>
+                        <button type="button" className="btn btn btn-warning">
+                          <Link to={{
+                            pathname: `/vote/${vote_item.poll_id}`,
+                            state: { vote: vote_item.poll_id }
+                          }}>Vote</Link>
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
 
 
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    );
+    </div>
+  );
 
-  }
 }
 
 export default App;
