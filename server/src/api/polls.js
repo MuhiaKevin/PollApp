@@ -12,10 +12,10 @@ router.get('/', (req, res) => {
 // add poll
 router.post('/add', (req, res) => {
     let { question, options } = req.body
-    
+
     let poll = {
         poll_id: shortid.generate(),
-        total_votes : 0,    
+        total_votes: 0,
         question: question,
         options: options
     }
@@ -64,7 +64,8 @@ router.put('/:pollid/vote', (req, res) => {
         if (error) {
             res.json({ error: error })
         } else {
-            res.json({ message: "Poll voted" })
+            // res.json({ message: "Poll voted" })
+            res.json(data)
         }
     })
 })
