@@ -21,16 +21,12 @@ function App() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div className="container">
           <a className="navbar-brand" href="http://localhost:3000/">Poll App</a>
-
         </div>
       </nav>
       <div className="container">
         <div className="wrap">
-          <div className="main">
             <div className="col-lg-12 text-center">
-              <div className="App">
-                <h1>Latest Polls</h1>
-
+                <h1>Polls</h1>
                 <ul className="list-group" >
                   {polls.map(vote_item => {
 
@@ -50,8 +46,6 @@ function App() {
                 </ul>
 
 
-              </div>
-            </div>
           </div>
         </div>
       </div>
