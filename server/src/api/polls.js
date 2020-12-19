@@ -56,9 +56,8 @@ router.get('/polls', (req, res) => {
 })
 
 // upvote a poll
-router.put('/:pollid/vote', (req, res) => {
-    let { optionindex } = req.body
-    let { pollid } = req.params
+router.put('/vote', (req, res) => {
+    let { optionindex, pollid} = req.body
 
     upVotePoll(pollid, optionindex, (error, data) => {
         if (error) {
